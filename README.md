@@ -1,4 +1,4 @@
-# slick #
+# scalatra-slick #
 
 ## Build & Run ##
 
