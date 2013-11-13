@@ -1,9 +1,11 @@
 # scalatra-slick #
 
+an application built with Scalatra + Slick
+
 ## Build & Run ##
 
 ```sh
-$ cd slick
+$ cd scalatra-slick
 $ ./sbt
 > container:start
 > browse
