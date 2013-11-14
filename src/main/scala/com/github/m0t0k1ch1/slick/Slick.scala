@@ -26,12 +26,12 @@ trait SlickRoutes extends ScalatraServlet
   get("/db/load-data") {
     db withSession
     {
-      val trainer = new Trainer(None, "m0t0k1ch1")
-      Trainers.insert(trainer)
+      Trainers.insert(new Trainer(None, "m0t0k1ch1"))
 
-      val pokemon1 = new Pokemon(None, 303, "Mawile")
-      val pokemon2 = new Pokemon(None, 59, "Arcanine")
-      Pokemons.insertAll(pokemon1, pokemon2)
+      Pokemons.insertAll(
+        new Pokemon(None, 303, "Mawile"),
+        new Pokemon(None, 59, "Arcanine")
+      )
 
       200
     }
