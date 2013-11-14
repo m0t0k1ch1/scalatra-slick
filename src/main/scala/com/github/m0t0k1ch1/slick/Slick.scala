@@ -1,47 +1,13 @@
 package com.github.m0t0k1ch1.slick
 
+import com.github.m0t0k1ch1.slick.model._
+import com.github.m0t0k1ch1.slick.schema._
+
 import org.scalatra._
 import scalate.ScalateSupport
 
 import scala.slick.driver.MySQLDriver.simple._
 import Database.threadLocalSession
-
-case class Trainer (
-  id:   Option[Int],
-  name: String
-)
-object Trainers extends Table[Trainer]("trainers") {
-  def id   = column[Int]("id", O.PrimaryKey, O.AutoInc)
-  def name = column[String]("name")
-  def * = id.? ~ name <> (Trainer, Trainer.unapply _)
-  def autoInc = name returning id
-}
-
-case class Pokemon (
-  id:     Option[Int],
-  number: Int,
-  name:   String
-)
-object Pokemons extends Table[Pokemon]("pokemons") {
-  def id     = column[Int]("id", O.PrimaryKey, O.AutoInc)
-  def number = column[Int]("number")
-  def name   = column[String]("name")
-  def * = id.? ~ number ~ name <> (Pokemon, Pokemon.unapply _)
-  def autoInc = number ~ name returning id
-}
-
-case class TrainerPokemon (
-  id:        Option[Int],
-  trainerId: Int,
-  pokemonId: Int
-)
-object TrainerPokemons extends Table[TrainerPokemon]("trainer_pokemons") {
-  def id        = column[Int]("id", O.PrimaryKey, O.AutoInc)
-  def trainerId = column[Int]("trainer_id")
-  def pokemonId = column[Int]("pokemon_id")
-  def * = id.? ~ trainerId ~ pokemonId <> (TrainerPokemon, TrainerPokemon.unapply _)
-  def autoInc = trainerId ~ pokemonId returning id
-}
 
 case class Slick(db: Database) extends ScalatraServlet with SlickRoutes
 
