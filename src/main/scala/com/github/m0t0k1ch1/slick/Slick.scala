@@ -84,8 +84,27 @@ trait SlickRoutes extends SlickStack
   }
 
   post("/trainer") {
-    // update trainer info
-    // params: trainer.id trainer.name
+    db withSession {
+      val name  = params("name")
+      val regex = """[a-zA-Z0-9]+""".r
+      name match {
+        case regex() => Trainers.insert(new Trainer(None, name))
+        case _       => halt(400)
+      }
+
+      redirect("/")
+    }
+  }
+
+  post("/delete") {
+    db withSession {
+      val id = params("id").toInt
+
+      Query(Trainers).filter(_.id === id).delete
+      Query(TrainerPokemons).filter(_.trainerId === id).delete
+
+      redirect("/")
+    }
   }
 
   post("/get") {

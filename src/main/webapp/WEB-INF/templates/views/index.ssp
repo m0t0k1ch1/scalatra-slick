@@ -3,15 +3,28 @@
 
 <div class="row basic-setup">
   <div class="col-12">
+    <form action="/trainer" method="post" class="inline-form">
+      <div class="form-fields">
+        <input type="text" name="name" placeholder="trainer name" />
+      </div>
+      <input type="submit" value="register" class="btn btn-info" />
+    </form>
     <table class="table table-striped">
       <tr>
         <th>id</th>
         <th>name</th>
+        <th>delete</th>
       </tr>
       #for (trainer <- trainers)
         <tr>
           <td><%= trainer.id %></td>
-          <td><a href="/trainer/<%= trainer.id %>"><%= trainer.name %></a></td>
+          <td><a href="/trainer/<%= trainer.id %>" class="link"><%= trainer.name %></a></td>
+          <td>
+            <form action="/delete" method="post" class="inline-form">
+              <input type="hidden" name="id" value="<%= trainer.id %>" />
+              <input type="submit" value="delete" class="btn btn-small btn-danger" />
+            </form>
+          </td>
         </tr>
       #end
     </table>
