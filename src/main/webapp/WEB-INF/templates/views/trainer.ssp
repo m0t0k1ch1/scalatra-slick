@@ -13,7 +13,7 @@
       #for (pokemon <- pokemons)
         <tr>
           <td><%= pokemon.number %></td>
-          <td><%=  pokemon.name %></td>
+          <td><%= pokemon.name %></td>
         </tr>
       #end
     </table>
