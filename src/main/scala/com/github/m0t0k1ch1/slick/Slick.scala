@@ -89,7 +89,7 @@ trait SlickRoutes extends SlickStack
       val regex = """[a-zA-Z0-9]+""".r
       name match {
         case regex() => Trainers.insert(new Trainer(None, name))
-        case _       => halt(400)
+        case _       => halt(400, body = <h1>invalid name</h1>)
       }
 
       redirect("/")
