@@ -1,14 +1,24 @@
 #import(com.github.m0t0k1ch1.slick.model._)
 <%@ val trainers: List[Trainer] %>
+<%@ val isError: Boolean %>
 
 <div class="row basic-setup">
   <div class="col-12">
-    <form action="/trainer" method="post" class="inline-form">
-      <div class="form-fields">
-        <input type="text" name="name" placeholder="trainer name" />
+    #if (isError)
+      <div class="form-fields-warning">
+    #end
+      <form action="/trainer" method="post" class="inline-form">
+        <div class="form-fields">
+          <input type="text" name="name" placeholder="trainer name" />
+        </div>
+        <input type="submit" value="register" class="btn btn-info" />
+        #if (isError)
+          <span class="help-hint">invalid name</span>
+        #end
+      </form>
+    #if (isError)
       </div>
-      <input type="submit" value="register" class="btn btn-info" />
-    </form>
+    #end
     <table class="table table-striped">
       <tr>
         <th>id</th>

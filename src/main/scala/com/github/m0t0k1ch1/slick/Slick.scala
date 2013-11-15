@@ -58,7 +58,8 @@ trait SlickRoutes extends SlickStack
       val trainers = Query(Trainers).list
       ssp(
         "/index",
-        "trainers" -> trainers
+        "trainers" -> trainers,
+        "isError"  -> false
       )
     }
   }
@@ -87,12 +88,21 @@ trait SlickRoutes extends SlickStack
     db withSession {
       val name  = params("name")
       val regex = """[a-zA-Z0-9]+""".r
-      name match {
-        case regex() => Trainers.insert(new Trainer(None, name))
-        case _       => halt(400, "invalid name")
+
+      val isError = name match {
+        case regex() => false
+        case _       => true
+      }
+      if (!isError) {
+        Trainers.insert(new Trainer(None, name))
       }
 
-      redirect("/")
+      val trainers = Query(Trainers).list
+      ssp(
+        "/index",
+        "trainers" -> trainers,
+        "isError"  -> isError
+      )
     }
   }
 
@@ -115,9 +125,5 @@ trait SlickRoutes extends SlickStack
   post("/release") {
     // release pokemon
     // params: trainer.id pokemon.id
-  }
-
-  notFound {
-    "not found"
   }
 }
