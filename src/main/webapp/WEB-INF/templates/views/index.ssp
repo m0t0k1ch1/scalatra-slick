@@ -1,0 +1,19 @@
+#import(com.github.m0t0k1ch1.slick.model._)
+<%@ val trainers: List[Trainer] %>
+
+<div class="row basic-setup">
+  <div class="col-12">
+    <table class="table table-striped">
+      <tr>
+        <th>id</th>
+        <th>name</th>
+      </tr>
+      #for (trainer <- trainers)
+        <tr>
+          <td><%= trainer.id %></td>
+          <td><%=  trainer.name %></td>
+        </tr>
+      #end
+    </table>
+  </div>
+</div>

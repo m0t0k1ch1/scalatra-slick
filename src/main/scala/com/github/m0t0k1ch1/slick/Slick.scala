@@ -11,10 +11,14 @@ import Database.threadLocalSession
 
 case class Slick(db: Database) extends ScalatraServlet with SlickRoutes
 
-trait SlickRoutes extends ScalatraServlet
+trait SlickRoutes extends SlickStack
 {
   val db: Database
   val ddl = (Trainers.ddl ++ Pokemons.ddl ++ TrainerPokemons.ddl)
+
+  before() {
+    contentType = "text/html"
+  }
 
   get("/db/create-tables") {
     db withSession {
@@ -43,5 +47,31 @@ trait SlickRoutes extends ScalatraServlet
       ddl.drop
       ddl.dropStatements.toList.mkString("<br />")
     }
+  }
+
+  get("/") {
+    db withSession {
+      val trainers = Query(Trainers).list
+      ssp("/index", "trainers" -> trainers)
+    }
+  }
+
+  get("/trainer/:id") {
+    // list of pokemons
+  }
+
+  post("/trainer") {
+    // update trainer info
+    // params: trainer.id trainer.name
+  }
+
+  post("/get") {
+    // get pokemon
+    // params: trainer.id pokemon.id
+  }
+
+  post("/release") {
+    // release pokemon
+    // params: trainer.id pokemon.id
   }
 }
