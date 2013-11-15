@@ -19,7 +19,7 @@ trait SlickRoutes extends ScalatraServlet
   get("/db/create-tables") {
     db withSession {
       ddl.create
-      ddl.createStatements.toList.mkString("\r\n")
+      ddl.createStatements.toList.mkString("<br />")
     }
   }
 
@@ -27,20 +27,21 @@ trait SlickRoutes extends ScalatraServlet
     db withSession
     {
       Trainers.insert(new Trainer(None, "m0t0k1ch1"))
+      Trainers.insert(new Trainer(None, "m0t0k1ch2"))
 
       Pokemons.insertAll(
         new Pokemon(None, 303, "Mawile"),
         new Pokemon(None, 59, "Arcanine")
       )
 
-      200
+      "success"
     }
   }
 
   get("/db/drop-tables") {
     db withSession {
       ddl.drop
-      ddl.dropStatements.toList.mkString("\r\n")
+      ddl.dropStatements.toList.mkString("<br />")
     }
   }
 }
