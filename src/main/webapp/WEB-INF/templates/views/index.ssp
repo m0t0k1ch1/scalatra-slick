@@ -9,12 +9,12 @@
     #end
       <form action="/trainer" method="post" class="inline-form">
         <div class="form-fields">
+          #if (isError)
+            <label for="">invalid name</label>
+          #end
           <input type="text" name="name" placeholder="trainer name" />
         </div>
         <input type="submit" value="register" class="btn btn-info" />
-        #if (isError)
-          <span class="help-hint">invalid name</span>
-        #end
       </form>
     #if (isError)
       </div>
@@ -31,7 +31,7 @@
           <td><a href="/trainer/<%= trainer.id %>" class="link"><%= trainer.name %></a></td>
           <td>
             <form action="/delete" method="post" class="inline-form">
-              <input type="hidden" name="id" value="<%= trainer.id %>" />
+              <input type="hidden" name="trainer_id" value="<%= trainer.id %>" />
               <input type="submit" value="delete" class="btn btn-small btn-danger" />
             </form>
           </td>

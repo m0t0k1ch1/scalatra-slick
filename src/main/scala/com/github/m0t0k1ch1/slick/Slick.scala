@@ -64,22 +64,25 @@ trait SlickRoutes extends SlickStack
     }
   }
 
-  get("/trainer/:id") {
+  get("/trainer/:trainer_id") {
     db withSession {
-      val id = params("id").toInt
+      val trainerId = params("trainer_id").toInt
 
-      val trainer = Query(Trainers).filter(_.id === id).firstOption
+      val trainer = Query(Trainers).filter(_.id === trainerId).firstOption
       if (trainer.isEmpty) redirect("/")
 
-      val pokemons = for {
-        tp <- TrainerPokemons if tp.trainerId === id
+      val trainerPokemons = for {
+        tp <- TrainerPokemons if tp.trainerId === trainerId
         p  <- Pokemons if p.id === tp.pokemonId
-      } yield p
+      } yield (tp.id, p)
+
+      val pokemons = Query(Pokemons).list.sortWith(_.number < _.number)
 
       ssp(
         "/trainer",
-        "trainer"  -> trainer.get,
-        "pokemons" -> pokemons.list.sortWith(_.number < _.number)
+        "trainer"         -> trainer.get,
+        "trainerPokemons" -> trainerPokemons.list.sortWith(_._2.number < _._2.number),
+        "pokemons"        -> pokemons
       )
     }
   }
@@ -108,22 +111,28 @@ trait SlickRoutes extends SlickStack
 
   post("/delete") {
     db withSession {
-      val id = params("id").toInt
-
-      Query(Trainers).filter(_.id === id).delete
-      Query(TrainerPokemons).filter(_.trainerId === id).delete
-
+      val trainerId = params("trainer_id").toInt
+      Query(Trainers).filter(_.id === trainerId).delete
+      Query(TrainerPokemons).filter(_.trainerId === trainerId).delete
       redirect("/")
     }
   }
 
   post("/get") {
-    // get pokemon
-    // params: trainer.id pokemon.id
+    db withSession {
+      val trainerId = params("trainer_id").toInt
+      val pokemonId = params("pokemon_id").toInt
+      TrainerPokemons.insert(new TrainerPokemon(None, trainerId, pokemonId))
+      redirect(s"/trainer/${trainerId}")
+    }
   }
 
   post("/release") {
-    // release pokemon
-    // params: trainer.id pokemon.id
+    db withSession {
+      val trainerId        = params("trainer_id")
+      val trainerPokemonId = params("trainer_pokemon_id").toInt
+      Query(TrainerPokemons).filter(_.id === trainerPokemonId).delete
+      redirect(s"/trainer/${trainerId}")
+    }
   }
 }
