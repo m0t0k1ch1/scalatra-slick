@@ -64,7 +64,23 @@ trait SlickRoutes extends SlickStack
   }
 
   get("/trainer/:id") {
-    // list of pokemons
+    db withSession {
+      val id = params("id").toInt
+
+      val trainer = Query(Trainers).filter(_.id === id).firstOption
+      if (trainer.isEmpty) redirect("/")
+
+      val pokemons = for {
+        tp <- TrainerPokemons if tp.trainerId === id
+        p  <- Pokemons if p.id === tp.pokemonId
+      } yield p
+
+      ssp(
+        "/trainer",
+        "trainer"  -> trainer.get,
+        "pokemons" -> pokemons.list.sortWith(_.number < _.number)
+      )
+    }
   }
 
   post("/trainer") {

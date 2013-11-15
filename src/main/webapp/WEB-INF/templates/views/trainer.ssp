@@ -1,0 +1,21 @@
+#import(com.github.m0t0k1ch1.slick.model._)
+<%@ val trainer: Trainer %>
+<%@ val pokemons: List[Pokemon] %>
+
+<div class="row basic-setup">
+  <div class="col-12">
+    <h1><%= trainer.name %></h1>
+    <table class="table table-striped">
+      <tr>
+        <th>number</th>
+        <th>name</th>
+      </tr>
+      #for (pokemon <- pokemons)
+        <tr>
+          <td><%= pokemon.number %></td>
+          <td><%=  pokemon.name %></td>
+        </tr>
+      #end
+    </table>
+  </div>
+</div>
