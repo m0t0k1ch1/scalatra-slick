@@ -30,13 +30,17 @@ trait SlickRoutes extends SlickStack
   get("/db/load-data") {
     db withSession
     {
-      Trainers.insert(new Trainer(None, "m0t0k1ch1"))
-      Trainers.insert(new Trainer(None, "m0t0k1ch2"))
+      val trainerId = Trainers.autoInc.insert("m0t0k1ch1")
 
-      Pokemons.insertAll(
-        new Pokemon(None, 303, "Mawile"),
-        new Pokemon(None, 59, "Arcanine")
-      )
+      val pokemons = List((303, "Mawile"), (59, "Arcanine"))
+      val pokemonIds = for {
+        pokemon <- pokemons
+        id = Pokemons.autoInc.insert(pokemon._1, pokemon._2)
+      } yield id
+
+      for (pokemonId <- pokemonIds) {
+        TrainerPokemons.insert(new TrainerPokemon(None, trainerId, pokemonId))
+      }
 
       "success"
     }
@@ -52,7 +56,10 @@ trait SlickRoutes extends SlickStack
   get("/") {
     db withSession {
       val trainers = Query(Trainers).list
-      ssp("/index", "trainers" -> trainers)
+      ssp(
+        "/index",
+        "trainers" -> trainers
+      )
     }
   }
 

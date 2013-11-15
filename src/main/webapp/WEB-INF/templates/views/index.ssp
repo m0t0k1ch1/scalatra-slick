@@ -11,7 +11,7 @@
       #for (trainer <- trainers)
         <tr>
           <td><%= trainer.id %></td>
-          <td><%=  trainer.name %></td>
+          <td><a href="/trainer/<%= trainer.id %>"><%= trainer.name %></a></td>
         </tr>
       #end
     </table>
