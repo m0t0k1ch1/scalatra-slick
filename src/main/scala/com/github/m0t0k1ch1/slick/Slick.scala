@@ -89,7 +89,7 @@ trait SlickRoutes extends SlickStack
       val regex = """[a-zA-Z0-9]+""".r
       name match {
         case regex() => Trainers.insert(new Trainer(None, name))
-        case _       => halt(400, body = <h1>invalid name</h1>)
+        case _       => halt(400, "invalid name")
       }
 
       redirect("/")
@@ -115,5 +115,9 @@ trait SlickRoutes extends SlickStack
   post("/release") {
     // release pokemon
     // params: trainer.id pokemon.id
+  }
+
+  notFound {
+    "not found"
   }
 }
