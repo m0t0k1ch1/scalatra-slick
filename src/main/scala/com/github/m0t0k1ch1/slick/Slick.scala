@@ -39,7 +39,7 @@ trait SlickRoutes extends SlickStack
       } yield id
 
       for (pokemonId <- pokemonIds) {
-        TrainerPokemons.insert(new TrainerPokemon(None, trainerId, pokemonId))
+        TrainerPokemons.autoInc.insert(trainerId, pokemonId)
       }
 
       "success"
@@ -97,7 +97,7 @@ trait SlickRoutes extends SlickStack
         case _       => true
       }
       if (!isError) {
-        Trainers.insert(new Trainer(None, name))
+        Trainers.autoInc.insert(name)
       }
 
       val trainers = Query(Trainers).list
@@ -122,7 +122,7 @@ trait SlickRoutes extends SlickStack
     db withSession {
       val trainerId = params("trainer_id").toInt
       val pokemonId = params("pokemon_id").toInt
-      TrainerPokemons.insert(new TrainerPokemon(None, trainerId, pokemonId))
+      TrainerPokemons.autoInc.insert(trainerId, pokemonId)
       redirect(s"/trainer/${trainerId}")
     }
   }
