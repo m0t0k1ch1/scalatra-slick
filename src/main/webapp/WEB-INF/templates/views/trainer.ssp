@@ -1,6 +1,6 @@
 #import(com.github.m0t0k1ch1.slick.model._)
 <%@ val trainer:         Trainer %>
-<%@ val trainerPokemons: List[(Int, Pokemon)] %>
+<%@ val trainerPokemons: List[(Pokemon, Int, Boolean)] %>
 <%@ val pokemons:        List[Pokemon] %>
 
 <div class="row basic-setup">
@@ -8,19 +8,31 @@
     <h1><%= trainer.name %></h1>
     <table class="table table-striped">
       <tr>
+        <th>favorite</th>
         <th>number</th>
         <th>name</th>
         <th>action</th>
       </tr>
       #for (trainerPokemon <- trainerPokemons)
         <tr>
-          <td><%= trainerPokemon._2.number %></td>
-          <td><%= trainerPokemon._2.name %></td>
+          <td>
+            #if (trainerPokemon._3 == true)
+              <span class="btn btn-small btn-warning">★</span>
+            #else
+              <form action="/favorite" method="post" class="inline-form">
+                <input type="hidden" name="trainer_id" value="<%= trainer.id %>" />
+                <input type="hidden" name="trainer_pokemon_id" value="<%= trainerPokemon._2 %>" />
+                <input type="submit" value="★" class="btn btn-small btn-alpha btn-warning" />
+              </form>
+            #end
+          </td>
+          <td><%= trainerPokemon._1.number %></td>
+          <td><%= trainerPokemon._1.name %></td>
           <td>
             <form action="/release" method="post" class="inline-form">
               <input type="hidden" name="trainer_id" value="<%= trainer.id %>" />
-              <input type="hidden" name="trainer_pokemon_id" value="<%= trainerPokemon._1 %>" />
-              <input type="submit" value="release" class="btn btn-small btn-warning" />
+              <input type="hidden" name="trainer_pokemon_id" value="<%= trainerPokemon._2 %>" />
+              <input type="submit" value="release" class="btn btn-small btn-info" />
             </form>
           </td>
         </tr>

@@ -74,14 +74,14 @@ trait SlickRoutes extends SlickStack
       val trainerPokemons = for {
         tp <- TrainerPokemons if tp.trainerId === trainerId
         p  <- Pokemons if p.id === tp.pokemonId
-      } yield (tp.id, p)
+      } yield (p, tp.id, tp.isFavorite)
 
       val pokemons = Query(Pokemons).list.sortWith(_.number < _.number)
 
       ssp(
         "/trainer",
         "trainer"         -> trainer.get,
-        "trainerPokemons" -> trainerPokemons.list.sortWith(_._2.number < _._2.number),
+        "trainerPokemons" -> trainerPokemons.list.sortWith(_._1.number < _._1.number),
         "pokemons"        -> pokemons
       )
     }
@@ -132,6 +132,27 @@ trait SlickRoutes extends SlickStack
       val trainerId        = params("trainer_id")
       val trainerPokemonId = params("trainer_pokemon_id").toInt
       Query(TrainerPokemons).filter(_.id === trainerPokemonId).delete
+      redirect(s"/trainer/${trainerId}")
+    }
+  }
+
+  post("/favorite") {
+    db withSession {
+      val trainerId        = params("trainer_id")
+      val trainerPokemonId = params("trainer_pokemon_id").toInt
+
+      val favoriteOld = for {
+        tp <- TrainerPokemons
+        if tp.isFavorite === true
+      } yield tp.isFavorite
+      favoriteOld.update(false)
+
+      val favoriteNew = for {
+        tp <- TrainerPokemons
+        if tp.id === trainerPokemonId
+      } yield tp.isFavorite
+      favoriteNew.update(true)
+
       redirect(s"/trainer/${trainerId}")
     }
   }
