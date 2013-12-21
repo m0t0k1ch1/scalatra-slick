@@ -2,7 +2,7 @@
 <%@ val trainers: List[Trainer] %>
 <%@ val isError: Boolean %>
 
-<div class="row basic-setup">
+<div class="row">
   <div class="col-12">
     #if (isError)
       <div class="form-fields-warning">
