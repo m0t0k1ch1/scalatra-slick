@@ -1,5 +1,5 @@
 scalatra-slick
-==============
+=====
 
 an application built with Scalatra + Slick + Scalate + Furatto
 
