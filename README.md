@@ -5,7 +5,7 @@ an application built with Scalatra + Slick + Scalate + Furatto
 
 ## Build & Run
 
-```sh
+``` sh
 $ cd scalatra-slick
 $ ./sbt
 > container:start
