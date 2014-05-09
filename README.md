@@ -11,21 +11,21 @@ $ ./sbt
 > container:start
 ```
 
-before you open the applicatin, you have to create tables and load data
+Before you open the applicatin, you have to create tables and load data.
 
-* Create Tables
+* create tables
 [http://localhost:8080/db/create-tables](http://localhost:8080/db/create-tables)
 
-* Load Data
+* load data
 [http://localhost:8080/db/load-data](http://localhost:8080/db/load-data)
 
-then, you can open the application
+Then, you can open the application.
 
-* Index
+* show index
 [http://localhost:8080](http://localhost:8080)
 
-if you reset the application, drop tables 
+If you reset the application, drop tables.
 
-* Drop Tables
+* drop tables
 [http://localhost:8080/db/drop-tables](http://localhost:8080/db/drop-tables)
 
