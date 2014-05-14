@@ -24,7 +24,7 @@ Then, you can open the application.
 
 [http://localhost:8080](http://localhost:8080)
 
-If you reset the application, access the following URL.
+If you want to reset the application, access the following URL.
 
 [http://localhost:8080/db/drop-tables](http://localhost:8080/db/drop-tables)
 
