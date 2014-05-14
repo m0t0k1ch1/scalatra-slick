@@ -1,7 +1,7 @@
 scalatra-slick
 ==============
 
-an application built with Scalatra + Slick + Scalate + Furatto
+an application built with [Scalatra](https://github.com/scalatra/scalatra) + [Slick](https://github.com/slick/slick) + [Scalate](https://github.com/scalate/scalate) + [Furatto](https://github.com/IcaliaLabs/furatto)
 
 ## Build & Run
 
@@ -11,21 +11,20 @@ $ ./sbt
 > container:start
 ```
 
-Before you open the applicatin, you have to create tables and load data.
+Before you open the applicatin, you have to create database named `scalatra-slick` in mysql.  
+In order to create tables, access the following URL.
 
-* create tables
 [http://localhost:8080/db/create-tables](http://localhost:8080/db/create-tables)
 
-* load data
+In order to load the initial data, access the following URL.
+
 [http://localhost:8080/db/load-data](http://localhost:8080/db/load-data)
 
 Then, you can open the application.
 
-* show index
 [http://localhost:8080](http://localhost:8080)
 
-If you reset the application, drop tables.
+If you reset the application, access the following URL.
 
-* drop tables
 [http://localhost:8080/db/drop-tables](http://localhost:8080/db/drop-tables)
 
