@@ -1,7 +1,7 @@
 scalatra-slick
 ==============
 
-an application built with [Scalatra](https://github.com/scalatra/scalatra) + [Slick](https://github.com/slick/slick) + [Scalate](https://github.com/scalate/scalate) + [Furatto](https://github.com/IcaliaLabs/furatto)
+a sample web application built with [Scalatra](https://github.com/scalatra/scalatra) + [Slick](https://github.com/slick/slick) + [Scalate](https://github.com/scalate/scalate) + [Furatto](https://github.com/IcaliaLabs/furatto)
 
 ## Build & Run
 
