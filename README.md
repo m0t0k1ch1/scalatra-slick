@@ -11,20 +11,19 @@ $ ./sbt
 > container:start
 ```
 
-Before you open the applicatin, you have to create database named `scalatra-slick` in mysql.  
+Before you open the application, you have to create database named `scalatra-slick` in MySQL.
 In order to create tables, access the following URL.
 
-[http://localhost:8080/db/create-tables](http://localhost:8080/db/create-tables)
+http://localhost:8080/db/create-tables
 
 In order to load the initial data, access the following URL.
 
-[http://localhost:8080/db/load-data](http://localhost:8080/db/load-data)
+http://localhost:8080/db/load-data
 
 Then, you can open the application.
 
-[http://localhost:8080](http://localhost:8080)
+http://localhost:8080
 
 If you want to reset the application, access the following URL.
 
-[http://localhost:8080/db/drop-tables](http://localhost:8080/db/drop-tables)
-
+http://localhost:8080/db/drop-tables
